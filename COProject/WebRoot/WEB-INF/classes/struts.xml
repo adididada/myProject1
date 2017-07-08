@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="root" namespace="/" extends="struts-default">
+	<interceptors>
+		<interceptor name="validate"
+			class="cn.mldn.util.interceptor.ValidateInterceptor" />
+		<interceptor name="encoding"
+			class="cn.mldn.util.interceptor.EncodingInterceptor" />
+		<interceptor name="randcode"
+			class="cn.mldn.util.interceptor.RandCodeInterceptor" />
+		<interceptor name="pages"
+			class="cn.mldn.office.interceptor.PagesInterceptor" />
+		<interceptor name="admin"
+			class="cn.mldn.office.interceptor.AdminInterceptor" />
+		<interceptor name="manager"
+			class="cn.mldn.office.interceptor.ManagerInterceptor" />
+		<interceptor name="emp"
+			class="cn.mldn.office.interceptor.EmpInterceptor" />
+		<interceptor-stack name="adminStack">
+			<!-- 要增加登录检查的拦截器（管理员标记：admin） -->
+			<interceptor-ref name="pages"/>
+			<interceptor-ref name="admin"/>
+			<interceptor-ref name="encoding"/>
+			<interceptor-ref name="validate" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">3145728</param>
+				<param name="allowedTypes">
+					image/bmp,image/jpg,image/jpeg,image/gif,image/png,
+					text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+					application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+					application/x-rar-compressed,application/zip
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="empStack">
+			<!-- 要增加登录检查的拦截器（普通雇员标记：emp） -->
+			<interceptor-ref name="pages"/>
+			<interceptor-ref name="emp"/>
+			<interceptor-ref name="encoding"/>
+			<interceptor-ref name="validate" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">3145728</param>
+				<param name="allowedTypes">
+					image/bmp,image/jpg,image/jpeg,image/gif,image/png,
+					text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+					application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+					application/x-rar-compressed,application/zip
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="managerStack">
+			<!-- 要增加登录检查的拦截器（项目经理标记：manager） -->
+			<interceptor-ref name="pages"/>
+			<interceptor-ref name="manager"/>
+			<interceptor-ref name="encoding"/>
+			<interceptor-ref name="validate" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">3145728</param>
+				<param name="allowedTypes">
+					image/bmp,image/jpg,image/jpeg,image/gif,image/png,
+					text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+					application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+					application/x-rar-compressed,application/zip
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="loginStack">
+			<interceptor-ref name="randcode" />
+			<interceptor-ref name="validate" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="commonStack">
+			<interceptor-ref name="pages"/>
+			<interceptor-ref name="encoding"/>
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+		<global-results>
+			<result name="login.page">login.jsp</result>
+			<result name="forward.page">/forward.jsp</result>
+			<result name="input">/errors.jsp</result>
+		</global-results>
+	</package>
+</struts>    
